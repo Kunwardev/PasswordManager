@@ -8,16 +8,18 @@ Created on Wed Feb  8 23:00:02 2023
 
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  passwd="Dev013@online",
-  database="KeyVault"
-)
+def initializeDb():
+    mydb = mysql.connector.connect(
+      host="localhost",
+      user="root",
+      passwd="Dev013@online",
+      database="KeyVault"
+    )
 
-print(mydb)
+    return mydb
 
-mycursor = mydb.cursor()
+mydb = initializeDb()
+#mycursor = mydb.cursor()
 
 # Inserting Values
 #sql = "INSERT INTO Vault (Platform, Vaultname, Keyvalue, Email) VALUES (%s, %s, %s, %s)"
@@ -29,10 +31,44 @@ mycursor = mydb.cursor()
 #print(mycursor.rowcount, "record(s) inserted.")
 
 # Selecting Values
-mycursor = mydb.cursor()
+#mycursor = mydb.cursor()
 
-mycursor.execute("SELECT * FROM Vault LIMIT 5")
-myresult = mycursor.fetchall()
+#mycursor.execute("SELECT * FROM Vault LIMIT 5")
+#myresult = mycursor.fetchall()
 
-for x in myresult:
-  print(x)
+#insert(('1','2','3','5'))
+#fetch('1')
+#delete('1')
+
+#for x in myresult:
+#  print(x)
+    
+    
+def fetchAll():
+    myCursor = mydb.cursor()
+    mysql = "SELECT * FROM Vault LIMIT 5"
+    myCursor.execute(mysql)
+    myResult = myCursor.fetchall()
+    print(myResult)
+
+def fetch(Platform):
+    myCursor = mydb.cursor()
+    mysql = "SELECT * FROM Vault WHERE Platform='{platform}'"
+    myCursor.execute(mysql.format(platform=Platform))
+    myResult = myCursor.fetchone()
+    print(myResult)
+
+def insert(values):
+    myCursor = mydb.cursor()
+    mysql = "INSERT INTO Vault (Platform, Vaultname, KeyValue, Email) VALUES (%s, %s, %s, %s)"
+    myCursor.execute(mysql, values)
+    mydb.commit()
+    print(myCursor.rowcount)
+    
+def delete(Platform):
+    myCursor = mydb.cursor()
+    print(Platform)
+    mysql = "DELETE FROM Vault WHERE Platform='{platform}'"
+    myCursor.execute(mysql.format(platform=Platform))
+    mydb.commit()
+    print(myCursor.rowcount)
