@@ -6,14 +6,17 @@ This is a temporary script file.
 """
 
 from cryptography.fernet import Fernet
-key = b'tUrzsMQD_XMYVHTmwIzGL8hoFlh8ooyMGqIQG9ytqJk='
-fernet = Fernet(key)
 
-def encode(message):
-    encMessage = fernet.encrypt(message.encode())
-    return encMessage
+class Cryptograph:
+    
+    def __init__(self):
+        self.key = b'tUrzsMQD_XMYVHTmwIzGL8hoFlh8ooyMGqIQG9ytqJk='
+        self.fernet = Fernet(self.key)
 
-def decode(encMessage):
-    decMessage = fernet.decrypt(encMessage).decode()
-    return decMessage
+    def encode(self, message):
+        encMessage = self.fernet.encrypt(message.encode())
+        return encMessage
 
+    def decode(self, encMessage):
+        decMessage = self.fernet.decrypt(encMessage).decode()
+        return decMessage

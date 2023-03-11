@@ -43,32 +43,43 @@ mydb = initializeDb()
 #for x in myresult:
 #  print(x)
     
-    
-def fetchAll():
-    myCursor = mydb.cursor()
-    mysql = "SELECT * FROM Vault LIMIT 5"
-    myCursor.execute(mysql)
-    myResult = myCursor.fetchall()
-    print(myResult)
 
-def fetch(Platform):
-    myCursor = mydb.cursor()
-    mysql = "SELECT * FROM Vault WHERE Platform='{platform}'"
-    myCursor.execute(mysql.format(platform=Platform))
-    myResult = myCursor.fetchone()
-    print(myResult)
-
-def insert(values):
-    myCursor = mydb.cursor()
-    mysql = "INSERT INTO Vault (Platform, Vaultname, KeyValue, Email) VALUES (%s, %s, %s, %s)"
-    myCursor.execute(mysql, values)
-    mydb.commit()
-    print(myCursor.rowcount)
+class DatabaseManager:
     
-def delete(Platform):
-    myCursor = mydb.cursor()
-    print(Platform)
-    mysql = "DELETE FROM Vault WHERE Platform='{platform}'"
-    myCursor.execute(mysql.format(platform=Platform))
-    mydb.commit()
-    print(myCursor.rowcount)
+    def fetchAll(self):
+        myCursor = mydb.cursor()
+        mysql = "SELECT * FROM Vault LIMIT 5"
+        myCursor.execute(mysql)
+        myResult = myCursor.fetchall()
+        print(myResult)
+    
+    def fetch(self, Platform):
+        myCursor = mydb.cursor()
+        mysql = "SELECT * FROM Vault WHERE Platform='{platform}'"
+        myCursor.execute(mysql.format(platform=Platform))
+        myResult = myCursor.fetchone()
+        print(myResult)
+        
+    def check(self, username, password):
+        myCursor = mydb.cursor()
+        mysql = "SELECT * FROM Vault WHERE Vaultname='{vaultname}' AND BINARY Keyvalue='{keyvalue}'"
+        myCursor.execute(mysql.format(vaultname=username, keyvalue=password))
+        myResult = myCursor.fetchone()
+        if myResult == None:
+            return False
+        return True
+            
+    def insert(self, values):
+        myCursor = mydb.cursor()
+        mysql = "INSERT INTO Vault (Platform, Vaultname, KeyValue, Email) VALUES (%s, %s, %s, %s)"
+        myCursor.execute(mysql, values)
+        mydb.commit()
+        print(myCursor.rowcount)
+        
+    def delete(self, Platform):
+        myCursor = mydb.cursor()
+        print(Platform)
+        mysql = "DELETE FROM Vault WHERE Platform='{platform}'"
+        myCursor.execute(mysql.format(platform=Platform))
+        mydb.commit()
+        print(myCursor.rowcount)
