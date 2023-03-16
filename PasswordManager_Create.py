@@ -21,8 +21,12 @@ class PasswordManager_create:
 
     def create(self, *args):
         try:
-            values = (self.platform.get(), self.vaultname.get(), self.keyvalue.get(), self.email.get())
-            print(values)
+            encrypted = self.crypter.encode(self.keyvalue.get())
+            values = (self.platform.get(), self.vaultname.get(), encrypted, self.email.get())
+            created = self.dbManager.insert(values)
+            if created == 1:
+                txt = "The row has been added for {platform} with Username: {username} and Password: {password}"
+                messagebox.showinfo(title="Added Value", message=txt.format(platform=values[0], username=values[1], password=self.keyvalue.get()))
         except:
             messagebox.showerror(title="Exception", prompt="Something went wrong, Try again!")
 
@@ -70,7 +74,4 @@ class PasswordManager_create:
         
     def run(self):
         self.root.mainloop()
-        
-p = PasswordManager_create()
-p.run()
     

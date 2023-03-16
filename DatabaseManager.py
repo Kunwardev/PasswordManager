@@ -7,6 +7,7 @@ Created on Wed Feb  8 23:00:02 2023
 """
 
 import mysql.connector
+import Cryptograph as crypt
 
 def initializeDb():
     mydb = mysql.connector.connect(
@@ -44,6 +45,7 @@ mydb = initializeDb()
 #  print(x)
     
 
+
 class DatabaseManager:
     
     def fetchAll(self):
@@ -52,6 +54,7 @@ class DatabaseManager:
         myCursor.execute(mysql)
         myResult = myCursor.fetchall()
         print(myResult)
+        return myResult
     
     def fetch(self, Platform):
         myCursor = mydb.cursor()
@@ -59,6 +62,7 @@ class DatabaseManager:
         myCursor.execute(mysql.format(platform=Platform))
         myResult = myCursor.fetchone()
         print(myResult)
+        return myResult
         
     def check(self, username, password):
         myCursor = mydb.cursor()
@@ -74,7 +78,7 @@ class DatabaseManager:
         mysql = "INSERT INTO Vault (Platform, Vaultname, KeyValue, Email) VALUES (%s, %s, %s, %s)"
         myCursor.execute(mysql, values)
         mydb.commit()
-        print(myCursor.rowcount)
+        return myCursor.rowcount
         
     def delete(self, Platform):
         myCursor = mydb.cursor()
@@ -83,3 +87,7 @@ class DatabaseManager:
         myCursor.execute(mysql.format(platform=Platform))
         mydb.commit()
         print(myCursor.rowcount)
+        
+        
+d= DatabaseManager()
+d.fetchAll()
