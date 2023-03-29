@@ -18,11 +18,13 @@ class PasswordManager_create:
         if self.length == None:
             self.length = 0
         self.keyvalue.set(self.generator.generate(self.length))
-
+        
     def create(self, *args):
         try:
             encrypted = self.crypter.encode(self.keyvalue.get())
-            values = (self.platform.get(), self.vaultname.get(), encrypted, self.email.get())
+            platform = self.platform.get()
+            values = (platform, self.vaultname.get(), encrypted, self.email.get())
+            print("PLATFORM: ",self.platform.get())
             created = self.dbManager.insert(values)
             if created == 1:
                 txt = "The row has been added for {platform} with Username: {username} and Password: {password}"
@@ -74,4 +76,6 @@ class PasswordManager_create:
         
     def run(self):
         self.root.mainloop()
-    
+
+#p = PasswordManager_create()
+#p.run()

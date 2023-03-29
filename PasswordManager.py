@@ -9,7 +9,7 @@ Created on Wed Feb  8 22:43:19 2023
 import Cryptograph as coder
 import DatabaseManager as db
 import PasswordManager_Create as create
-#import PasswordManager_Read as read
+import PasswordManager_Read as read
 
 from tkinter import Tk, messagebox, StringVar, ttk
 
@@ -54,7 +54,8 @@ class PasswordManager:
         createManager.run()
         
     def openPasswordManager_read(self):
-        pass
+        readManager = read.PasswordManager_Read()
+        readManager.run()
     
         # Having the Create and Read Function for now
     def main_window(self):

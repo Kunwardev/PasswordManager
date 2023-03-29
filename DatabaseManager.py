@@ -61,7 +61,6 @@ class DatabaseManager:
         mysql = "SELECT * FROM Vault WHERE Platform='{platform}'"
         myCursor.execute(mysql.format(platform=Platform))
         myResult = myCursor.fetchone()
-        print(myResult)
         return myResult
         
     def check(self, username, password):
@@ -75,7 +74,8 @@ class DatabaseManager:
             
     def insert(self, values):
         myCursor = mydb.cursor()
-        mysql = "INSERT INTO Vault (Platform, Vaultname, KeyValue, Email) VALUES (%s, %s, %s, %s)"
+        print(values)
+        mysql = "INSERT INTO Vault (Platform, Vaultname, Keyvalue, Email) VALUES (%s, %s, %s, %s)"
         myCursor.execute(mysql, values)
         mydb.commit()
         return myCursor.rowcount
@@ -87,7 +87,6 @@ class DatabaseManager:
         myCursor.execute(mysql.format(platform=Platform))
         mydb.commit()
         print(myCursor.rowcount)
-        
-        
-d= DatabaseManager()
-d.fetchAll()
+
+#d = DatabaseManager()
+#d.fetchAll()
