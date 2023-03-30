@@ -9,7 +9,7 @@ Created on Sat Mar  4 00:27:05 2023
 import Cryptograph as coder
 import DatabaseManager as db
 import RandomPasswordGenerator as rpg
-from tkinter import Tk, simpledialog, StringVar, ttk, messagebox
+from tkinter import Toplevel, simpledialog, StringVar, ttk, messagebox
 
 class PasswordManager_create:
 
@@ -33,7 +33,7 @@ class PasswordManager_create:
             messagebox.showerror(title="Exception", prompt="Something went wrong, Try again!")
 
     def __init__(self):
-        self.root = Tk()
+        self.root = Toplevel()
         self.generator = rpg.RandomPasswordGenerator()
         self.dbManager = db.DatabaseManager()
         self.crypter = coder.Cryptograph()

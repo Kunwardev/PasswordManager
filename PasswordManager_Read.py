@@ -8,7 +8,7 @@ Created on Wed Mar 15 23:22:21 2023
 
 import Cryptograph as coder
 import DatabaseManager as db
-from tkinter import Tk, StringVar, ttk, messagebox
+from tkinter import Tk, StringVar, ttk, messagebox, Toplevel
 
 class PasswordManager_Read:
     
@@ -23,8 +23,9 @@ class PasswordManager_Read:
             messagebox.showinfo(title="Empty Platform", message="Please Fill Platform")
         else:
             fetchedvalues = (self.dbManager.fetch(platform))
+            print("FETCHED: ", fetchedvalues)
             self.vaultname = fetchedvalues[1]
-            self.keyvalue = self.cryptoManager.decode(bytes(fetchedvalues[2], encoding='utf8'))
+            self.keyvalue = self.cryptoManager.decode(bytes(fetchedvalues[2], encoding='utf-8'))
             self.email = fetchedvalues[3]
             
             ttk.Label(self.mainframe, text="User Name").grid(column=1, row=8, sticky=('W'))
@@ -39,13 +40,13 @@ class PasswordManager_Read:
     def __init__(self):
         self.dbManager = db.DatabaseManager()
         self.cryptoManager = coder.Cryptograph()
-        self.root = Tk()
-        self.root.title("Get Values")
-        self.mainframe = ttk.Frame(self.root, padding="10 10 30 30")
+        self.read_root = Toplevel()
+        self.read_root.title("Get Values")
+        self.mainframe = ttk.Frame(self.read_root, padding="10 10 30 30")
         self.mainframe.grid(column=0, row=0, sticky=('N', 'W', 'E', 'S'))
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
-        self.root.geometry("400x250")
+        self.read_root.columnconfigure(0, weight=1)
+        self.read_root.rowconfigure(0, weight=1)
+        self.read_root.geometry("400x250")
         ttk.Label(self.mainframe, text="Platform").grid(column=1, row=2, sticky='W')
         self.platform = StringVar()
         self.platform_entry = ttk.Entry(self.mainframe, width=17, textvariable=self.platform)
@@ -55,4 +56,7 @@ class PasswordManager_Read:
         
         
     def run(self):
-        self.root.mainloop()
+        self.read_root.mainloop()
+
+#p = PasswordManager_Read()
+#p.run()

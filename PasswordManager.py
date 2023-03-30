@@ -59,20 +59,18 @@ class PasswordManager:
     
         # Having the Create and Read Function for now
     def main_window(self):
-        self.root = Tk()
-        self.root.title("Password Manager")
+        self.mainroot = Tk()
+        self.mainroot.title("Password Manager")
         
-        self.mainframe = ttk.Frame(self.root, padding="10 10 30 30")
+        self.mainframe = ttk.Frame(self.mainroot, padding="10 10 30 30")
         self.mainframe.grid(column=0, row=0, sticky=('N', 'W', 'E', 'S'))
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
-        self.root.geometry("350x200")
+        self.mainroot.columnconfigure(0, weight=1)
+        self.mainroot.rowconfigure(0, weight=1)
+        self.mainroot.geometry("350x200")
         ttk.Button(self.mainframe, text="Create", command=self.openPasswordManager_create).grid(column=0, row=2, sticky=('W','E'))
         ttk.Label(self.mainframe, text="          ").grid(column=3, row=2, sticky=('W'))
         ttk.Button(self.mainframe, text="Read", command=self.openPasswordManager_read).grid(column=4, row=2, sticky=('W','E'))
-        self.root.mainloop()
-        
-    
+        self.mainroot.mainloop()
         
 if __name__ == "__main__":
     myApp = PasswordManager()
